@@ -15,10 +15,6 @@ void ft_print_addr(unsigned long addr, int first, t_options *options)
 
 	if (first == 0)
 		ft_putstr("0x", -1, options);
-	if (addr < 0)
-	{
-		return (ft_print_addr(addr * -1, ++first, options));
-	}
 	if (addr >= 16)
 	{
 		ft_print_addr(addr / 16, ++first, options);
