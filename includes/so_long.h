@@ -11,8 +11,11 @@
 # include <fcntl.h>
 # include <stdarg.h>
 #include  <errno.h>
-# include <math.h>
 # include <stdio.h>
+
+/*
+	TEXTURE
+*/
 
 # define GRASS 			"texture/grass.xpm"
 # define WALL 			"texture/wall.xpm"
@@ -40,9 +43,17 @@
 # define ENNEMIES_SPEED 30 //smaller is the number faster will be the ennemies speed.
 # define DAMAGE_PER_ENNEMIE 1;
 
+/*
+	PLAYER SETTINGS
+*/
+
 # define PV 9
 
-# define WIND_RESOLUTION_X 1500
+/*
+	WINDOWS SETTINGS
+*/
+
+# define WIND_RESOLUTION_X 1200
 # define WIND_RESOLUTION_Y 300
 # define RESOLUTION_AUTO FALSE
 
@@ -61,7 +72,7 @@ typedef struct	s_map
 	int		pv;
 	int		mouv;
 
-	int		coll_sprite;
+	int		variable;
 }				t_map;
 
 typedef	struct	s_mlx
@@ -101,51 +112,57 @@ typedef struct s_data
 }				t_data;
 
 t_data *x(void);
-void ft_create_ennemies(int i, int j, char *file);
-void ft_print_list();
+void ft_x_init();
+void ft_move_up();
+void ft_print_pv();
 void free_map(void);
-void free_struct(void);
-int quit_parsing(char *str, int print_map_error, int ord, int abs);
-int ft_file_height(char *str);
-int ft_get_map(t_map *map, int argc, char **argv);
-int ft_is_rectangle(t_map *map);
-int ft_check_exit(t_map *map);
-int ft_is_correct_map(t_map *map);
-int ft_is_surrended_by_walls(t_map *map);
-void ft_get_player_position(t_map *map);
-void ft_add_ennemies(t_map *map);
-int ft_map_check(t_map *map, int argc, char **argv);
 int get_t(int trgb);
 int get_r(int trgb);
 int get_g(int trgb);
 int get_b(int trgb);
-char *ft_strcat(const char *s1, const char *s2);
+void ft_move_down();
+void ft_move_left();
+void free_map(void);
+void ft_print_list();
+void ft_move_right();
+int max(int x, int y);
+void ft_is_done(void);
+int	ft_red_cross(void);
+void free_struct(void);
+void free_struct(void);
+void ft_move_ennemies();
+void	close_window(void);
+void	free_ennemies(void);
+void ft_collectible(void);
+int key_hook(int key_code);
+int ft_file_height(char *str);
+int ft_check_exit(t_map *map);
+int ft_is_rectangle(t_map *map);
+void ft_display_hub(t_mlx *img);
+int main(int argc, char **argv);
+void ft_add_ennemies(t_map *map);
 int ft_is_ennemies(int i, int j);
 void ft_ennemies_on_player(void);
-char *ft_get_ennemie_text(int i, int j);
+t_mlx ft_get_img(char *pathfile);
+int ft_is_correct_map(t_map *map);
+int	ft_quit(char *str, char *text);
 void ft_ennemies_up(int *i, int *y);
 void ft_ennemies_down(int *i, int *y);
 void ft_ennemies_left(int *i, int *y);
 void ft_ennemies_right(int *i, int *y);
-void ft_move_ennemies();
+void ft_get_player_position(t_map *map);
+char *ft_get_ennemie_text(int i, int j);
+int ft_is_surrended_by_walls(t_map *map);
+char *ft_strcat(const char *s1, const char *s2);
+void ft_create_ennemies(int i, int j, char *file);
+int ft_get_map(t_map *map, int argc, char **argv);
+t_ennemies *ft_create_elem(int a,int b,char *file);
+int ft_map_check(t_map *map, int argc, char **argv);
+int print_quit(char *str, char *free, int ord, int abs);
+void ft_put_texture(int a, int b, t_mlx *mlx, t_mlx img);
 void put_pixel_on_img(t_mlx *img, int x, int y, int color);
 int ft_put_img_to_win(t_mlx *mlx, int a, int b, t_mlx img);
-void ft_put_texture(int a, int b, t_mlx *mlx, t_mlx img);
 char *ft_get_texture(const struct s_texture textfile[5], char c);
-t_mlx ft_get_img(char *pathfile);
 int ft_print_map(const struct s_texture textfile[5], t_mlx *mlx);
-int max(int x, int y);
-void ft_x_init();
-void ft_move_up();
-void ft_move_down();
-void ft_move_left();
-void ft_move_right();
-void ft_is_done(void);
-void ft_collect_collectible(void);
-void ft_print_pv();
-void ft_display_hub(t_mlx *img);
-int key_hook(int key_code);
-int main(int argc, char **argv);
-t_ennemies *ft_create_elem(int a,int b,char *file);
 
 #endif
