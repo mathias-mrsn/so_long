@@ -27,7 +27,7 @@ FLAGS	=	-Wall -Wextra -Werror
 SYSTEM = $(shell uname)
 
 ifeq (${SYSTEM}, Darwin)
-INCS = -I ./includes -I ./libft -I ./mlx_mac
+INCS = -I ./includes -I ./libft/includes -I ./mlx_mac
 LIBC = -L ./mlx_mac -lmlx -L ./libft -lft
 MLX_FLAGS = -framework OpenGL -framework AppKit
 MLX_USED = mlx_mac

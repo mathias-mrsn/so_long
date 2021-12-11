@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 18:56:09 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 18:56:10 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/11 19:19:08 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	__print_end__(char *str, t_data *s)
 		__putstr(str, 2);
 	else if (str)
 	{
-		printf("%s\n", str);
-		printf("You made %d moves\n", s->map->mouv);
+		__printf("%s\n", str);
+		__printf("You made %d moves\n", s->map->mouv);
 	}
 }
 
@@ -40,13 +40,13 @@ int	print_quit(char *str, char *free, int abs, t_data *s)
 	while (index < s->map->height)
 	{
 		j = 0;
-		printf("line --> %-5d : \"", index);
+		__printf("line --> %-5d : \"", index);
 		if (abs == index)
-			printf("\033[0;31m%s\033[0m", s->map->map[index]);
+			__printf("\033[0;31m%s\033[0m", s->map->map[index]);
 		else
-			printf("\033[0;32m%s\033[0m", s->map->map[index]);
+			__printf("\033[0;32m%s\033[0m", s->map->map[index]);
 		j++;
-		printf("\"\n");
+		__printf("\"\n");
 		index++;
 	}
 	ft_quit(free, NULL, s);

@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:00:58 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 19:00:59 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/11 19:20:44 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_x_init(t_data *s)
 	img.img = mlx_xpm_file_to_image(s->mlx->mlx, WALL, &img.height, &img.width);
 	if (BONUS)
 	{
-		s->mlx->height = WINDOWS_Y;
+		s->mlx->height = __max(WINDOWS_Y, STATUS_BAR);
 		s->mlx->width = __max(WINDOWS_X, (30 + (PV + 1 / 2) * 30));
 	}
 	else
