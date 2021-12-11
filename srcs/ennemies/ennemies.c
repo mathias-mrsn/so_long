@@ -1,8 +1,20 @@
-#include "../../includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ennemies.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 18:56:44 by mamaurai          #+#    #+#             */
+/*   Updated: 2021/12/11 18:56:56 by mamaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static t_ennemies *__create_elem__(int a, int b, char *file)
+#include "so_long.h"
+
+static t_ennemies	*__create_elem__(int a, int b, char *file)
 {
-	t_ennemies *new;
+	t_ennemies	*new;
 
 	new = malloc(sizeof(t_ennemies) * 1);
 	if (!new)
@@ -14,9 +26,9 @@ static t_ennemies *__create_elem__(int a, int b, char *file)
 	return (new);
 }
 
-void ft_create_ennemies(t_data *s, int i, int j, char *file)
+void	ft_create_ennemies(t_data *s, int i, int j, char *file)
 {
-	t_ennemies *new;
+	t_ennemies	*new;
 
 	if (!s->ennemies)
 		s->ennemies = __create_elem__(i, j, file);
@@ -28,9 +40,9 @@ void ft_create_ennemies(t_data *s, int i, int j, char *file)
 	}
 }
 
-int __is_ennemie__(t_data *s, int i, int j)
+int	__is_ennemie__(t_data *s, int i, int j)
 {
-	t_ennemies *tmp;
+	t_ennemies	*tmp;
 
 	tmp = s->ennemies;
 	while (tmp)
@@ -42,15 +54,15 @@ int __is_ennemie__(t_data *s, int i, int j)
 	return (0);
 }
 
-void ft_ennemies_on_player(t_data *s)
+void	ft_ennemies_on_player(t_data *s)
 {
 	if (__is_ennemie__(s, s->map->player_y, s->map->player_x))
 		s->map->pv -= DAMAGE_PER_ENNEMIE;
 }
 
-char *__get_ennemie_text__(t_data *s, int i, int j)
+char	*__get_ennemie_text__(t_data *s, int i, int j)
 {
-	t_ennemies *tmp;
+	t_ennemies	*tmp;
 
 	tmp = s->ennemies;
 	while (tmp)

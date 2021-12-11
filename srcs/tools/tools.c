@@ -1,37 +1,28 @@
-#include "../../includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 19:00:52 by mamaurai          #+#    #+#             */
+/*   Updated: 2021/12/11 19:00:53 by mamaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-long __random(int len_max)
+#include "so_long.h"
+
+float	__fmax__(float a, float b)
 {
-	int fd;
-	int i;
-	long res;
-	char str[7];
-
-	res = 0;
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd < 0)
-		return (0);
-	if (read(fd, str, 9))
-	{
-		str[6] = '\0';
-		i = 6;
-		while (--i > 0)
-		{
-			res *= 10;
-			res += str[i];
-		}
-	}
-	close(fd);
-	if (res < 0)
-		res *= -1;
-	return (res % len_max);
+	if (a < b)
+		return (b);
+	return (a);
 }
 
-
-char *ft_strcat(const char *s1, const char *s2)
+char	*ft_strcat(const char *s1, const char *s2)
 {
-	char *str;
-	int i;
+	char	*str;
+	int		i;
 
 	i = 0;
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
@@ -53,7 +44,7 @@ char *ft_strcat(const char *s1, const char *s2)
 	return (str);
 }
 
-int max(int x, int y)
+int	max(int x, int y)
 {
 	if (x >= y)
 		return (x);

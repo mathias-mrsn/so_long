@@ -1,4 +1,16 @@
-#include "../../includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   x_init.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 19:00:58 by mamaurai          #+#    #+#             */
+/*   Updated: 2021/12/11 19:00:59 by mamaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
 
 static void	__set_x_map__(t_data *data)
 {
@@ -30,9 +42,9 @@ static void	__set_x_mlx__(t_data *data)
 	data->ennemies = NULL;
 }
 
-t_data *x(void)
+t_data	*x(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -48,9 +60,9 @@ t_data *x(void)
 	return (data);
 }
 
-void ft_x_init(t_data *s)
+void	ft_x_init(t_data *s)
 {
-	t_mlx img;
+	t_mlx	img;
 
 	img.img = mlx_xpm_file_to_image(s->mlx->mlx, WALL, &img.height, &img.width);
 	if (BONUS)

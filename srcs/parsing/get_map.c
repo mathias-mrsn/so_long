@@ -1,10 +1,22 @@
-#include "../../includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 18:58:46 by mamaurai          #+#    #+#             */
+/*   Updated: 2021/12/11 18:58:47 by mamaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int __file_height__(char *str)
+#include "so_long.h"
+
+static int	__file_height__(char *str)
 {
-	int fd;
-	char c;
-	int len;
+	int		fd;
+	char	c;
+	int		len;
 
 	len = 0;
 	fd = open(str, O_RDONLY);
@@ -15,11 +27,11 @@ static int __file_height__(char *str)
 	return (len + 1);
 }
 
-int ft_get_map(t_data *s, char **argv)
+void	ft_get_map(t_data *s, char **argv)
 {
-	char *str;
-	size_t i;
-	size_t fd;
+	char	*str;
+	size_t	i;
+	size_t	fd;
 
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
@@ -37,5 +49,4 @@ int ft_get_map(t_data *s, char **argv)
 	}
 	s->map->map[i] = NULL;
 	close(fd);
-	return (0);
 }

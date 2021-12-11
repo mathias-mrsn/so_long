@@ -164,8 +164,8 @@ void ft_move_ennemies(t_data *s);
 int	red_cross(t_data *s);
 int print_quit(char *str, char *free, int abs, t_data *s);
 int	ft_quit(char *str, char *text, t_data *s);
-int ft_map_check(t_data *s, int argc, char **argv);
-int ft_get_map(t_data *s, char **argv);
+void ft_map_check(t_data *s, int argc, char **argv);
+void ft_get_map(t_data *s, char **argv);
 void ft_get_player_position(t_map *map);
 void ft_add_ennemies(t_data *s);
 void ft_is_done(t_data *s);
@@ -179,5 +179,7 @@ char *ft_strcat(const char *s1, const char *s2);
 int max(int x, int y);
 t_data *x(void);
 void ft_x_init(t_data *s);
+void	__print_end__(char *str, t_data *s);
+float	__fmax__(float a, float b);
 
 #endif
