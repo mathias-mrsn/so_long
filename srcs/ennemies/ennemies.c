@@ -1,6 +1,6 @@
 #include "../../includes/so_long.h"
 
-t_ennemies *ft_create_elem(int a, int b, char *file)
+static t_ennemies *__create_elem__(int a, int b, char *file)
 {
 	t_ennemies *new;
 
@@ -14,25 +14,25 @@ t_ennemies *ft_create_elem(int a, int b, char *file)
 	return (new);
 }
 
-void ft_create_ennemies(int i, int j, char *file)
+void ft_create_ennemies(t_data *s, int i, int j, char *file)
 {
 	t_ennemies *new;
 
-	if (!x()->ennemies)
-		x()->ennemies = ft_create_elem(i, j, file);
+	if (!s->ennemies)
+		s->ennemies = __create_elem__(i, j, file);
 	else
 	{
-		new = ft_create_elem(i, j, file);
-		new->next = x()->ennemies;
-		x()->ennemies = new;
+		new = __create_elem__(i, j, file);
+		new->next = s->ennemies;
+		s->ennemies = new;
 	}
 }
 
-int ft_is_ennemies(int i, int j)
+int __is_ennemie__(t_data *s, int i, int j)
 {
 	t_ennemies *tmp;
 
-	tmp = x()->ennemies;
+	tmp = s->ennemies;
 	while (tmp)
 	{
 		if (tmp->x == i && tmp->y == j)
@@ -42,18 +42,17 @@ int ft_is_ennemies(int i, int j)
 	return (0);
 }
 
-void ft_ennemies_on_player(void)
+void ft_ennemies_on_player(t_data *s)
 {
-	if (ft_is_ennemies(x()->map->player_y, x()->map->player_x))
-		x()->map->pv -= DAMAGE_PER_ENNEMIE;
-	return;
+	if (__is_ennemie__(s, s->map->player_y, s->map->player_x))
+		s->map->pv -= DAMAGE_PER_ENNEMIE;
 }
 
-char *ft_get_ennemie_text(int i, int j)
+char *__get_ennemie_text__(t_data *s, int i, int j)
 {
 	t_ennemies *tmp;
 
-	tmp = x()->ennemies;
+	tmp = s->ennemies;
 	while (tmp)
 	{
 		if (tmp->x == i && tmp->y == j)

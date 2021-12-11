@@ -1,18 +1,18 @@
 #include "../../includes/so_long.h"
 
-void ft_is_done(void)
+void ft_is_done(t_data *s)
 {
-	if (x()->map->pv < 1)
-		ft_quit("0123", "Error :\nYou died");
-	if (x()->map->map[x()->map->player_x][x()->map->player_y] == 'E' && x()->map->collec == 0)
-		ft_quit("0123", "Error :\nCongrats");
+	if (s->map->pv < 1)
+		ft_quit("0123", "Error :\nYou died", s);
+	if (s->map->map[s->map->player_x][s->map->player_y] == 'E' && s->map->collec == 0)
+		ft_quit("0123", "Error :\nCongrats", s);
 }
 
-void ft_collectible(void)
+void ft_collectible(t_data *s)
 {
-	if (x()->map->map[x()->map->player_x][x()->map->player_y] == 'C')
+	if (s->map->map[s->map->player_x][s->map->player_y] == 'C')
 	{
-		x()->map->collec--;
-		x()->map->map[x()->map->player_x][x()->map->player_y] = '0';
+		s->map->collec--;
+		s->map->map[s->map->player_x][s->map->player_y] = '0';
 	}
 }

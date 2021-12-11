@@ -1,6 +1,6 @@
 #include "../../includes/so_long.h"
 
-void	set_x_map(t_data *data)
+static void	__set_x_map__(t_data *data)
 {
 	data->map->height = 0;
 	data->map->width = 0;
@@ -16,7 +16,7 @@ void	set_x_map(t_data *data)
 	data->map->variable = 0;
 }
 
-void	set_x_mlx(t_data *data)
+static void	__set_x_mlx__(t_data *data)
 {
 	data->mlx->mlx = 0;
 	data->mlx->win = 0;
@@ -32,41 +32,38 @@ void	set_x_mlx(t_data *data)
 
 t_data *x(void)
 {
-	static t_data *data;
+	t_data *data;
 
+	data = malloc(sizeof(t_data));
 	if (!data)
-	{
-		data = malloc(sizeof(t_data));
-		if (!data)
-			return (NULL);
-		data->mlx = malloc(sizeof(t_mlx));
-		if (!data->mlx)
-			return (NULL);
-		data->map = malloc(sizeof(t_map));
-		if (!data->map)
-			return (NULL);
-		set_x_map(data);
-		set_x_mlx(data);
-	}
+		return (NULL);
+	data->mlx = malloc(sizeof(t_mlx));
+	if (!data->mlx)
+		return (NULL);
+	data->map = malloc(sizeof(t_map));
+	if (!data->map)
+		return (NULL);
+	__set_x_map__(data);
+	__set_x_mlx__(data);
 	return (data);
 }
 
-void ft_x_init()
+void ft_x_init(t_data *s)
 {
 	t_mlx img;
 
-	img.img = mlx_xpm_file_to_image(x()->mlx->mlx, WALL, &img.height, &img.width);
-	if (RESOLUTION_AUTO == FALSE && WIND_RESOLUTION_X >= (30 + (PV + 1 / 2) * 30) && WIND_RESOLUTION_Y > 70 + x()->map->height)
+	img.img = mlx_xpm_file_to_image(s->mlx->mlx, WALL, &img.height, &img.width);
+	if (BONUS)
 	{
-		x()->mlx->height = WIND_RESOLUTION_Y;
-		x()->mlx->width = WIND_RESOLUTION_X;
+		s->mlx->height = WINDOWS_Y;
+		s->mlx->width = __max(WINDOWS_X, (30 + (PV + 1 / 2) * 30));
 	}
 	else
 	{
-		x()->mlx->height = (x()->map->height * img.height) + 70;
-		x()->mlx->width = max(x()->map->width * img.width, (30 + (PV + 1 / 2) * 30));
+		s->mlx->height = (s->map->height * img.height);
+		s->mlx->width = s->map->width * img.width;
 	}
-	mlx_destroy_image(x()->mlx->mlx, img.img);
-	x()->map->player_dir = 1;
-	x()->map->pv = PV;
+	mlx_destroy_image(s->mlx->mlx, img.img);
+	s->map->player_dir = 1;
+	s->map->pv = PV;
 }

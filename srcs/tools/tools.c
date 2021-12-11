@@ -1,6 +1,6 @@
 #include "../../includes/so_long.h"
 
-long ft_rand(int len_max)
+long __random(int len_max)
 {
 	int fd;
 	int i;

@@ -1,40 +1,39 @@
 #include "../../includes/so_long.h"
 
-void free_map(void)
+static void free_map(t_data *s)
 {
 	int i;
 
-	i = x()->map->height;
+	i = s->map->height;
 	while (--i >= 0)
 	{
-		free(x()->map->map[i]);
+		free(s->map->map[i]);
 	}
-	free(x()->map->map);
+	free(s->map->map);
 }
 
-void free_struct(void)
+static void free_struct(t_data *s)
 {
-	free(x()->map);
-	free(x()->mlx);
-	free(x());
+	free(s->map);
+	free(s->mlx);
+	free(s);
 }
 
-void	close_window(void)
+static void	close_window(t_data *s)
 {
-	if(x()->mlx->img)
-		mlx_destroy_image(x()->mlx->mlx, x()->mlx->img);
-	if(x()->mlx->win)
-		mlx_destroy_window(x()->mlx->mlx, x()->mlx->win);
-	mlx_destroy_display(x()->mlx->mlx);
-	free(x()->mlx->mlx);
+	if(s->mlx->img)
+		mlx_destroy_image(s->mlx->mlx, s->mlx->img);
+	if(s->mlx->win)
+		mlx_destroy_window(s->mlx->mlx, s->mlx->win);
+	free(s->mlx->mlx);
 }
 
-void	free_ennemies(void)
+static void	free_ennemies(t_data *s)
 {
 	t_ennemies *tmp;
 	t_ennemies *del;
 
-	tmp = x()->ennemies;
+	tmp = s->ennemies;
 	while(tmp)
 	{
 		del = tmp;
@@ -42,4 +41,24 @@ void	free_ennemies(void)
 		free(del->texture);
 		free(del);
 	}
+}
+
+int	ft_quit(char *str, char *text, t_data *s)
+{
+	static void		(*f[4])() = {free_map, close_window, free_ennemies, free_struct};
+	char			c;
+
+	if (text && __strnstr(text, "Error", INT_MAX))
+		__putstr(text, 2);
+	else if (text)
+		printf("%s\n", text);
+	while(*str)
+	{
+		c = *str;
+		if(c >= '0' && c <= '3')
+			(f[c - 48])(s);
+		str++;
+	}
+	exit(0);
+	return (0);
 }

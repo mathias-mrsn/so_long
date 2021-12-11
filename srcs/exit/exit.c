@@ -1,53 +1,34 @@
 #include "../../includes/so_long.h"
 
-int	ft_red_cross(void)
+int	red_cross(t_data *s)
 {
-	ft_quit("0123", "Error :\nred cross clicked");
+	ft_quit("0123", "Error :\nred cross clicked", s);
 	return (0);
 }
 
-int print_quit(char *str, char *free, int ord, int abs)
+int print_quit(char *str, char *free, int abs, t_data *s)
 {
-	size_t index;
-	size_t j;
+	int index;
+	int j;
 
 	index = 0;
-	if(str)
+	if (str && __strnstr(str, "Error", INT_MAX))
+		__putstr(str, 2);
+	else if(str)
 		printf("%s\n", str);
-	while (index < x()->map->height)
+	while (index < s->map->height)
 	{
 		j = 0;
-		printf("line --> %-5zu : \"", index);
-		while (x()->map->map[index][j])
-		{
-			if (ord == index && abs == j || ord == index && abs == -1)
-				printf("\033[0;31m%c\033[0m", x()->map->map[index][j]);
-			else
-				printf("\033[0;32m%c\033[0m", x()->map->map[index][j]);
-			j++;
-		}
+		printf("line --> %-5d : \"", index);
+		if (abs == index)
+			printf("\033[0;31m%s\033[0m", s->map->map[index]);
+		else
+			printf("\033[0;32m%s\033[0m", s->map->map[index]);
+		j++;
 		printf("\"\n");
 		index++;
 	}
-	ft_quit(free, NULL);
+	ft_quit(free, NULL, s);
 	return (0);
 }
 
-int	ft_quit(char *str, char *text)
-{
-	static void (*f[4])() = {free_map, close_window, free_ennemies, free_struct};
-	char	c;
-
-	if (text)
-		printf("%s\n", text);
-	while(*str)
-	{
-		c = *str;
-		if(c >= '0' && c <= '3')
-			(f[c - 48])();
-		str++;
-	}
-	// while(1);
-	exit(0);
-	return (0);
-}

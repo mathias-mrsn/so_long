@@ -1,6 +1,6 @@
-NAME	=	so_long
+NAME	:=	so_long
 
-INCS	=	./includes
+BONUS	:=	so_long
 
 SRCS	=	srcs/so_long.c \
 			srcs/ennemies/move_ennemies.c \
@@ -22,29 +22,48 @@ OBJS	=	${SRCS:.c=.o}
 
 CC		=	clang
 
-FLAGS	=	-Wall -Wextra -Werror -I -g3
+FLAGS	=	-Wall -Wextra -Werror
 
+SYSTEM = $(shell uname)
+
+ifeq (${SYSTEM}, Darwin)
+INCS = -I ./includes -I ./libft -I ./mlx_mac
+LIBC = -L ./mlx_mac -lmlx -L ./libft -lft
+MLX_FLAGS = -framework OpenGL -framework AppKit
+MLX_USED = mlx_mac
+endif
+
+ifeq (${SERVER}, Linux)
+INCS = -I ./includes -I ./libft -I ./mlx
+LIBC = -L ./mlx -L ./libft
 MLX_FLAGS	=	-L./mlx -lmlx -lX11 -lbsd -lXext -lm
+MLX_USED = mlx
+endif
 
 all:		${NAME}
 
+.c.o:
+			${CC} ${FLAGS} ${INCS} -c $< -o $@
+
 ${NAME}:	${OBJS}
-			${MAKE} -C libft
-			${MAKE} -C mlx
-			${CC} -o ${NAME} ${OBJS} ${FLAGS} ${MLX_FLAGS} libft/libft.a mlx/libmlx.a
+			@${MAKE} -C libft
+			@${MAKE} -C ${MLX_USED}
+			@${CC} ${FLAGS} ${INCS} ${LIBC} ${MLX_FLAGS} -o ${NAME} ${OBJS} -D BONUS=0
+
+bonus:		
+			@${MAKE} -C libft >/dev/null
+			@${MAKE} -C ${MLX_USED} >/dev/null 2>&1
+			@${CC} ${FLAGS} ${INCS} ${LIBC} ${MLX_FLAGS} -o ${NAME} ${SRCS} -D BONUS=1
 
 clean:		
-			${MAKE} -C libft clean
-			${MAKE} -C mlx clean
-			rm -f ${OBJS}
+			@${MAKE} -C libft clean
+			@${MAKE} -C ${MLX_USED} clean >/dev/null
+			@rm -f ${OBJS}
 
 fclean:		clean
-				${MAKE} -C libft fclean
-				rm -f ${NAME}
+			@${MAKE} -C libft fclean
+			@rm -f ${NAME}
 
 re:			fclean all
 
-.PHONY:		all fclean clean all
-
-
-
+.PHONY:		all fclean clean all bonus

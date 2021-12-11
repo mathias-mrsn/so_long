@@ -33,6 +33,30 @@
 # define ENNEMIE_2 		"texture/ennemie_2.xpm"
 
 
+/*
+	KEY MAPPING
+*/
+
+# if defined(__APPLE__) && defined(__MACH__)
+ #  define KEY_ESC		53
+ #  define KEY_UP		13
+ #  define KEY_RIGHT	0
+ #  define KEY_DOWN		1
+ #  define KEY_LEFT		2
+ #  define RED_CROSS	17
+# else
+ #  define KEY_ESC		65307
+ #  define KEY_UP		119
+ #  define KEY_RIGHT	97
+ #  define KEY_DOWN		115
+ #  define KEY_LEFT		100
+ #  define RED_CROSS	33
+# endif
+
+/*
+	VARIABLE
+*/
+
 # define TRUE 1
 # define FALSE 0
 
@@ -53,9 +77,22 @@
 	WINDOWS SETTINGS
 */
 
-# define WIND_RESOLUTION_X 1200
-# define WIND_RESOLUTION_Y 300
-# define RESOLUTION_AUTO FALSE
+# define WINDOWS_X 800
+# define WINDOWS_Y 800
+
+// # ifndef BONUS
+#  define BONUS 1
+// # endif
+
+#if (BONUS == 1)
+	# define STATUS_BAR 70
+# else
+	# define STATUS_BAR 0
+#endif
+
+# define WINDOWS_OVERFLOW_SECURITY 1
+
+# define COLLEC_REFRESH_TIME 20
 
 typedef struct	s_map
 {
@@ -71,7 +108,8 @@ typedef struct	s_map
 	int		player_dir;	
 	int		pv;
 	int		mouv;
-
+	// int		err_x;
+	// int		err_y;
 	int		variable;
 }				t_map;
 
@@ -111,58 +149,35 @@ typedef struct s_data
 	
 }				t_data;
 
-t_data *x(void);
-void ft_x_init();
-void ft_move_up();
-void ft_print_pv();
-void free_map(void);
+int main(int argc, char **argv);
+int ft_display_hub(t_data *s);
+void __pixel_on_img__(t_mlx *img, int x, int y, int color);
+void __put_img_to_win__(t_data *s, int a, int b, t_mlx img);
+void __put_texture__(int a, int b, t_data *s, t_mlx img);
+char *__get_texture__(t_data *s, const struct s_texture textfile[5], char c);
+t_mlx __get_img__(t_data *s, char *pathfile);
+void ft_create_ennemies(t_data *s, int i, int j, char *file);
+int __is_ennemie__(t_data *s, int i, int j);
+void ft_ennemies_on_player(t_data *s);
+char *__get_ennemie_text__(t_data *s, int i, int j);
+void ft_move_ennemies(t_data *s);
+int	red_cross(t_data *s);
+int print_quit(char *str, char *free, int abs, t_data *s);
+int	ft_quit(char *str, char *text, t_data *s);
+int ft_map_check(t_data *s, int argc, char **argv);
+int ft_get_map(t_data *s, char **argv);
+void ft_get_player_position(t_map *map);
+void ft_add_ennemies(t_data *s);
+void ft_is_done(t_data *s);
+void ft_collectible(t_data *s);
+int key_hook(int key_code, t_data *s);
 int get_t(int trgb);
 int get_r(int trgb);
 int get_g(int trgb);
 int get_b(int trgb);
-void ft_move_down();
-void ft_move_left();
-void free_map(void);
-void ft_print_list();
-void ft_move_right();
-int max(int x, int y);
-void ft_is_done(void);
-int	ft_red_cross(void);
-void free_struct(void);
-void free_struct(void);
-void ft_move_ennemies();
-void	close_window(void);
-void	free_ennemies(void);
-void ft_collectible(void);
-int key_hook(int key_code);
-int ft_file_height(char *str);
-int ft_check_exit(t_map *map);
-int ft_is_rectangle(t_map *map);
-void ft_display_hub(t_mlx *img);
-int main(int argc, char **argv);
-void ft_add_ennemies(t_map *map);
-int ft_is_ennemies(int i, int j);
-void ft_ennemies_on_player(void);
-t_mlx ft_get_img(char *pathfile);
-int ft_is_correct_map(t_map *map);
-int	ft_quit(char *str, char *text);
-void ft_ennemies_up(int *i, int *y);
-void ft_ennemies_down(int *i, int *y);
-void ft_ennemies_left(int *i, int *y);
-void ft_ennemies_right(int *i, int *y);
-void ft_get_player_position(t_map *map);
-char *ft_get_ennemie_text(int i, int j);
-int ft_is_surrended_by_walls(t_map *map);
 char *ft_strcat(const char *s1, const char *s2);
-void ft_create_ennemies(int i, int j, char *file);
-int ft_get_map(t_map *map, int argc, char **argv);
-t_ennemies *ft_create_elem(int a,int b,char *file);
-int ft_map_check(t_map *map, int argc, char **argv);
-int print_quit(char *str, char *free, int ord, int abs);
-void ft_put_texture(int a, int b, t_mlx *mlx, t_mlx img);
-void put_pixel_on_img(t_mlx *img, int x, int y, int color);
-int ft_put_img_to_win(t_mlx *mlx, int a, int b, t_mlx img);
-char *ft_get_texture(const struct s_texture textfile[5], char c);
-int ft_print_map(const struct s_texture textfile[5], t_mlx *mlx);
+int max(int x, int y);
+t_data *x(void);
+void ft_x_init(t_data *s);
 
 #endif

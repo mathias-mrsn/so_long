@@ -1,23 +1,23 @@
 #include "../../includes/so_long.h"
 
-int ft_print_map(const struct s_texture textfile[5], t_mlx *mlx)
+static int ft_print_map(const struct s_texture textfile[5], t_data *s)
 {
 	const struct s_texture playerfile[5] = {{'0', PLAYER_LEFT}, {'0', PLAYER_BACK}, {'0', PLAYER_RIGHT}, {'0', PLAYER_FRONT}};
-	size_t i;
-	size_t j;
+	int i;
+	int j;
 
 	i = 0;
-	while (x()->map->map[i])
+	while (s->map->map[i])
 	{
 		j = 0;
-		while (x()->map->map[i][j])
+		while (s->map->map[i][j])
 		{
-			if (i == x()->map->player_x && j == x()->map->player_y)
-				ft_put_texture(i, j, mlx, ft_get_img(playerfile[x()->map->player_dir].filepath)); // i == y and j == x
-			else if (ft_is_ennemies(j, i))
-				ft_put_texture(i, j, mlx, ft_get_img(ft_get_ennemie_text(j, i)));
+			if (i == s->map->player_x && j == s->map->player_y)
+				__put_texture__(i, j, s, __get_img__(s, playerfile[s->map->player_dir].filepath));
+			else if (__is_ennemie__(s, j, i))
+				__put_texture__(i, j, s, __get_img__(s, __get_ennemie_text__(s, j, i)));
 			else
-				ft_put_texture(i, j, mlx, ft_get_img(ft_get_texture(textfile, x()->map->map[i][j])));
+				__put_texture__(i, j, s, __get_img__(s, __get_texture__(s, textfile, s->map->map[i][j])));
 			j++;
 		}
 		i++;
@@ -25,52 +25,57 @@ int ft_print_map(const struct s_texture textfile[5], t_mlx *mlx)
 	return (0);
 }
 
-void ft_print_pv()
+static void ft_print_pv(t_data *s)
 {
 	int i;
 	int pixel_space;
 
 	pixel_space = 0;
 	i = 0;
+	if (!BONUS)
+		return ;
 	while (i <= PV)
 	{
-		if (x()->map->pv > i)
+		if (s->map->pv > i)
 		{
-			if (x()->map->pv - 1 == i)
-				ft_put_img_to_win(x()->mlx, pixel_space + 15, 15, ft_get_img(HALF_HEART));
+			if (s->map->pv - 1 == i)
+				__put_img_to_win__(s, pixel_space + 15, 15, __get_img__(s, HALF_HEART));
 			else
-				ft_put_img_to_win(x()->mlx, pixel_space + 15, 15, ft_get_img(FULL_HEART));
+				__put_img_to_win__(s, pixel_space + 15, 15, __get_img__(s, FULL_HEART));
 		}
 		else
-			ft_put_img_to_win(x()->mlx, pixel_space + 15, 15, ft_get_img(EMPTY_HEART));
+			__put_img_to_win__(s, pixel_space + 15, 15, __get_img__(s, EMPTY_HEART));
 		i += 2;
 		pixel_space += 30;
 	}
 }
 
-void	ft_print_score()
+static void	__print_score__(t_data *s)
 {
 	char *score;
 	char *nbr;
 
-	nbr = ft_itoa(x()->map->mouv);
-	score = ft_strcat("Moves : ", nbr);
-	mlx_string_put(x()->mlx->mlx, x()->mlx->win, 15, 50, 0xFFFFFF, score);
+	if (!BONUS)
+		return ;
+	nbr = __itoa(s->map->mouv);
+	score = __strjoin("Moves : ", nbr);
+	mlx_string_put(s->mlx->mlx, s->mlx->win, 15, 50, 0xFFFFFF, score);
 	free(nbr);
 	free(score);
 }
 
-void ft_display_hub(t_mlx *img)
+int ft_display_hub(t_data *s)
 {
 	const struct s_texture textfile[5] = {{'1', WALL}, {'0', GRASS}, {'C', COLLECTIBLE_1}, {'E', EXIT}};
-	ft_print_map(textfile, img);
-	ft_print_pv();
-	ft_move_ennemies();
-	mlx_put_image_to_window(img->mlx, img->win, x()->mlx->img, 0, 0);
-	ft_print_score();
-	ft_collectible();
-	ft_is_done();
-	if (!(x()->map->variable % 4))
-		ft_ennemies_on_player();
-	x()->map->variable++;
+	ft_print_map(textfile, s); //Done
+	ft_print_pv(s); //Done
+	ft_move_ennemies(s);
+	mlx_put_image_to_window(s->mlx->mlx, s->mlx->win, s->mlx->img, 0, 0);
+	__print_score__(s);
+	ft_collectible(s);
+	ft_is_done(s);
+	if (!(s->map->variable % 4))
+		ft_ennemies_on_player(s);
+	s->map->variable++;
+	return (0);
 }

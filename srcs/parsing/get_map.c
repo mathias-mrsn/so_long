@@ -1,6 +1,6 @@
 #include "../../includes/so_long.h"
 
-int ft_file_height(char *str)
+static int __file_height__(char *str)
 {
 	int fd;
 	char c;
@@ -15,7 +15,7 @@ int ft_file_height(char *str)
 	return (len + 1);
 }
 
-int ft_get_map(t_map *map, int argc, char **argv)
+int ft_get_map(t_data *s, char **argv)
 {
 	char *str;
 	size_t i;
@@ -24,18 +24,18 @@ int ft_get_map(t_map *map, int argc, char **argv)
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		ft_quit("3", "Error :\ncouldn't open file'");
-	map->map = malloc(sizeof(char *) * (ft_file_height(argv[1]) + 1));
-	if (!map->map)
-		ft_quit("03", "Error :\nmemory errors");
-	str = get_next_line(fd);
+		ft_quit("3", "Error :\ncouldn't open file", s);
+	s->map->map = malloc(sizeof(char *) * (__file_height__(argv[1]) + 1));
+	if (!s->map->map)
+		ft_quit("03", "Error :\nmemory errors", s);
+	str = __gnl(fd);
 	while (str)
 	{
-		map->map[i++] = str;
-		map->height++;
-		str = get_next_line(fd);
+		s->map->map[i++] = str;
+		s->map->height++;
+		str = __gnl(fd);
 	}
-	map->map[i] = NULL;
+	s->map->map[i] = NULL;
 	close(fd);
 	return (0);
 }
