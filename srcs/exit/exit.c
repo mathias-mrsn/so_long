@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 18:56:09 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 19:19:08 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:09:05 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	print_quit(char *str, char *free, int abs, t_data *s)
 		index++;
 	}
 	ft_quit(free, NULL, s);
-	return (0);
+	return (__FAILURE);
 }

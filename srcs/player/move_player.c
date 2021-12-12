@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:00:16 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 19:18:50 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/12 12:31:53 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	__move_left__(t_data *s)
 	{
 		s->map->player_y++;
 		s->map->mouv++;
+		if (!BONUS)
+			__printf("You made %5d movements\n", s->map->mouv);
 		ft_collectible(s);
 	}
 	s->map->player_dir = 2;
@@ -29,6 +31,8 @@ static void	__move_right__(t_data *s)
 	{
 		s->map->player_y--;
 		s->map->mouv++;
+		if (!BONUS)
+			__printf("You made %5d movements\n", s->map->mouv);
 		ft_collectible(s);
 	}
 	s->map->player_dir = 0;
@@ -40,6 +44,8 @@ static void	__move_up__(t_data *s)
 	{
 		s->map->player_x--;
 		s->map->mouv++;
+		if (!BONUS)
+			__printf("You made %5d movements\n", s->map->mouv);
 		ft_collectible(s);
 	}
 	s->map->player_dir = 1;
@@ -51,6 +57,8 @@ static void	__move_down__(t_data *s)
 	{
 		s->map->player_x++;
 		s->map->mouv++;
+		if (!BONUS)
+			__printf("You made %5d movements\n", s->map->mouv);
 		ft_collectible(s);
 	}
 	s->map->player_dir = 3;

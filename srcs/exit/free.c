@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 18:56:07 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 18:56:08 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:13:05 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ int	ft_quit(char *str, char *text, t_data *s)
 	static void		(*f[4])() = {free_map,
 		close_window, free_ennemies, free_struct};
 	char			c;
+	int				output;
 
+	output = __SUCCESS;
+	if (text && __strnstr(text, "Error", INT_MAX))
+		output = __FAILURE;
 	__print_end__(text, s);
 	while (*str)
 	{
@@ -67,5 +71,5 @@ int	ft_quit(char *str, char *text, t_data *s)
 			(f[c - 48])(s);
 		str++;
 	}
-	exit(0);
+	exit(output);
 }

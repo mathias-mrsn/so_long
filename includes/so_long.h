@@ -6,7 +6,7 @@
 /*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:16:48 by mamaurai          #+#    #+#             */
-/*   Updated: 2021/12/11 19:16:49 by mamaurai         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:52:40 by mamaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "mlx.h"
 # include "libft.h"
+# include <stdint.h>
 
 /*
 	TEXTURE
@@ -76,15 +77,20 @@
 	WINDOWS SETTINGS
 */
 
-# define WINDOWS_X 800
-# define WINDOWS_Y 800
+# ifndef WINDOWS_X
+#  define WINDOWS_X 800
+# endif
+
+# ifndef WINDOWS_Y
+#  define WINDOWS_Y 800
+# endif
 
 /*
 	BONUS SETTINGS
 */
 
 # ifndef BONUS
-#  define BONUS 1
+#  define BONUS 0
 # endif
 
 # if (BONUS == 1)
