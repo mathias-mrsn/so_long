@@ -47,7 +47,7 @@ MLX_USED = mlx_mac
 HEADER_MESSAGE = SO_LONG IS COMPILING ON ${_YELLOW}MACOS${_END}
 endif
 
-ifeq (${SERVER}, Linux)
+ifeq (${SYSTEM}, Linux)
 INCS = -I ./includes -I ./libft -I ./mlx
 LIBC = -L ./mlx -L ./libft
 MLX_FLAGS	=	-L./mlx -lmlx -lX11 -lbsd -lXext -lm
